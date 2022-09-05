@@ -1,5 +1,5 @@
 
-# Creating an AWS instance for the Webserver!
+# Creating an AWS instance for the public ec2
 resource "aws_instance" "public_ec2" {
 
   depends_on = [
@@ -8,8 +8,8 @@ resource "aws_instance" "public_ec2" {
     aws_subnet.private_subnet,
   ]
 
-  # AMI ID [I have used my custom AMI which has some softwares pre installed]
-  ami           = "ami-035c5dc086849b5de"
+  # AMI ID attached to the ec2
+  ami           = var.ami
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public_subnet.id
 
@@ -24,11 +24,18 @@ resource "aws_instance" "public_ec2" {
     Name = "Public_ec2_From_Terraform"
   }
 
-  # Installing required softwares into the system!
+  # test ssh into the private ec2
   connection {
-    type = "ssh"
-    user = "ec2-user"
-    private_key = file("~/.ssh/id_rsa")    #aws_key_pair.key_pair.id
-    host = aws_instance.public_ec2.public_ip
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("~/.ssh/id_rsa") #aws_key_pair.key_pair.id
+    host        = aws_instance.public_ec2.public_ip
+  }
+
+  #### update the private instance and remote into it
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum update -y",
+    ]
   }
 }

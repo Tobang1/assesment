@@ -1,5 +1,5 @@
 # Creating a resource for the Route Table Association!
-resource "aws_route_table_association" "RT-IG-Association" {
+resource "aws_route_table_association" "rt_ig_association" {
 
   depends_on = [
     aws_vpc.my_vpc,

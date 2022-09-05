@@ -1,4 +1,4 @@
-# Creating security group for MySQL, this will allow access only from the instances having the security group created above.
+# Creating security group for private ec2, this will allow access only from the instances in public sg.
 resource "aws_security_group" "private_sg" {
 
   depends_on = [
@@ -12,7 +12,7 @@ resource "aws_security_group" "private_sg" {
   name        = "private sg"
   vpc_id      = aws_vpc.my_vpc.id
 
-  # Created an inbound rule for MySQL
+  # Created an inbound ssh rule for private ec2
   ingress {
     description     = "ssh access from public sg instance"
     from_port       = 22
@@ -21,7 +21,7 @@ resource "aws_security_group" "private_sg" {
     security_groups = [aws_security_group.public_sg.id]
   }
 
-  # Created an inbound rule for MySQL
+  # Created an inbound http  rule for private ec2
   ingress {
     description     = "http accesss from public sg"
     from_port       = 80

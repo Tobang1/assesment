@@ -11,11 +11,9 @@ variable "aws_region" {
   default     = "eu-west-2"
 }
 
-variable "amis" {
+variable "ami" {
   description = "AMIs by region"
-  default = {
-    eu-west-2 = "ami-f1810f86" # ubuntu 14.04 LTS
-  }
+  default     = "ami-035c5dc086849b5de"
 }
 
 variable "vpc_cidr" {

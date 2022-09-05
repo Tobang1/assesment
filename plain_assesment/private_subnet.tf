@@ -1,4 +1,4 @@
-# Creating Public subnet!
+# Creating private subnet!
 resource "aws_subnet" "private_subnet" {
   depends_on = [
     aws_vpc.my_vpc,

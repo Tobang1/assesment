@@ -1,5 +1,5 @@
 
-# Creating a Security Group for WordPress
+# Creating a Security Group for public sg
 resource "aws_security_group" "public_sg" {
 
   depends_on = [
@@ -38,7 +38,7 @@ resource "aws_security_group" "public_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Outward Network Traffic for the WordPress
+  # Outward Network Traffic for the public ec2
   egress {
     description = "for public sg"
     from_port   = 0
