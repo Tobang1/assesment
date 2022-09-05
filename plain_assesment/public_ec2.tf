@@ -31,19 +31,4 @@ resource "aws_instance" "public_ec2" {
     private_key = file("~/.ssh/id_rsa")    #aws_key_pair.key_pair.id
     host = aws_instance.public_ec2.public_ip
   }
-
-  # Code for installing the softwares!
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum update -y",
-      "sudo yum install php php-mysqlnd httpd -y",
-      "wget https://wordpress.org/wordpress-4.8.14.tar.gz",
-      "tar -xzf wordpress-4.8.14.tar.gz",
-      "sudo cp -r wordpress /var/www/html/",
-      "sudo chown -R apache.apache /var/www/html/",
-      "sudo systemctl start httpd",
-      "sudo systemctl enable httpd",
-      "sudo systemctl restart httpd"
-    ]
-  }
 }
